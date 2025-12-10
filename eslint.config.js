@@ -14,6 +14,13 @@ export default [
             react: {
                 version: 'detect',
             },
+            'import/resolver': {
+                typescript: {},
+                node: {
+                    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+                    paths: ['src'],
+                },
+            },
         },
     },
     // Global ignores
