@@ -18,7 +18,7 @@ export default [
                 typescript: {},
                 node: {
                     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-                    paths: ['src'],
+                    paths: ['src', 'test'],
                 },
             },
         },
