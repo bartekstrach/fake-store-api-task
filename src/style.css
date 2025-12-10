@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@layer base {
+    body {
+        @apply bg-white font-sans text-black;
+        line-height: 1.5;
+        font-weight: 400;
+    }
+
+    #root {
+        @apply flex min-h-screen flex-col;
+    }
+}
