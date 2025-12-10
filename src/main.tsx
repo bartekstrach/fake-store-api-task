@@ -18,6 +18,7 @@ if (import.meta.env.DEV) {
     });
 }
 
+// Ref: https://tanstack.com/query/latest/docs/reference/QueryClient
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
