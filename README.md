@@ -4,7 +4,7 @@
 
 1. Install pnpm - https://pnpm.io/installation
 2. Run `pnpm install` to install dependencies
-3. Create `.env` file based on `.env.example` content (no need to change `STORE_API_URL`)
+3. Create `.env` file based on `.env.example` content (no need to change `VITE_STORE_API_URL`)
 4. Run `pnpm dev` to run the application
 5. Application on the local environment is available on http://localhost:5173/
 

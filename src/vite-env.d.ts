@@ -5,7 +5,7 @@ interface ViteTypeOptions {
 }
 
 interface ImportMetaEnv {
-    readonly STORE_API_URL: string;
+    readonly VITE_STORE_API_URL: string;
     readonly DEV: boolean;
 }
 
