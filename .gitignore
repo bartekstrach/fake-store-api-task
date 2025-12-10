@@ -1,0 +1,16 @@
+node_modules
+
+# Testing
+coverage
+
+# Secrets
+.env
+.env.local
+
+# Logs
+logs
+*.log
+
+# Build
+dist
+tsconfig.tsbuildinfo
