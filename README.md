@@ -36,6 +36,8 @@
 - icons - [Heroicons](https://heroicons.dev)
 
 ### Testing
+- Faker
+- Mock Service Worker
 - React Testing Library
 - Vitest
 
