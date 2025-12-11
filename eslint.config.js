@@ -79,6 +79,16 @@ export default [
                             group: 'external',
                             position: 'before',
                         },
+                        {
+                            pattern: '@/**',
+                            group: 'internal',
+                            position: 'after',
+                        },
+                        {
+                            pattern: '@test/**',
+                            group: 'internal',
+                            position: 'after',
+                        },
                     ],
                     pathGroupsExcludedImportTypes: ['react'],
                     'newlines-between': 'always',
