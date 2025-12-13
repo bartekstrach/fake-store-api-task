@@ -1,5 +1,5 @@
 import { CartProductItem, CartSummary, StateCard } from '@/components';
-import { useCart } from '@/hooks';
+import { useCartContext } from '@/hooks';
 import { Product } from '@/types';
 
 export const CartPage = () => {
@@ -10,7 +10,7 @@ export const CartPage = () => {
         getTotalPrice,
         incrementQuantity,
         removeFromCart,
-    } = useCart();
+    } = useCartContext();
 
     const handleDecrementQuantity = (product: Product) => {
         decrementQuantity({ productId: product.id });

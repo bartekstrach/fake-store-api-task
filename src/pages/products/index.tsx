@@ -1,12 +1,12 @@
 import { useProducts } from '@/api/products';
 import { ProductItem, ProductItemSkeleton, StateCard } from '@/components';
 import { SKELETON_ITEMS_COUNT } from '@/constants';
-import { useCart } from '@/hooks';
+import { useCartContext } from '@/hooks';
 import { Product } from '@/types';
 
 export const ProductsPage = () => {
     const { data, error, isFetching } = useProducts();
-    const { addToCart } = useCart();
+    const { addToCart } = useCartContext();
 
     const handleAddToCart = (product: Product) => {
         addToCart({ product, quantity: 1 });

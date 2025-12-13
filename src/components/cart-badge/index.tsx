@@ -1,9 +1,9 @@
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
-import { useCart } from '@/hooks';
+import { useCartContext } from '@/hooks';
 
 export const CartBadge = () => {
-    const { getTotalItemsCount } = useCart();
+    const { getTotalItemsCount } = useCartContext();
 
     const itemCount = getTotalItemsCount();
 
