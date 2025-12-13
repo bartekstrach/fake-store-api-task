@@ -1,6 +1,6 @@
 import { delay, http, HttpResponse, JsonBodyType } from 'msw';
 
-import { server } from '@test/utils/server';
+import { server } from '@test/utils';
 
 const BASE_URL = import.meta.env.VITE_STORE_API_URL;
 const DEFAULT_DELAY = 100;
