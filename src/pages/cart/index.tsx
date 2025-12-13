@@ -1,11 +1,16 @@
-import { useMemo } from 'react';
-
 import { CartProductItem, CartSummary, StateCard } from '@/components';
 import { useCart } from '@/hooks';
 import { Product } from '@/types';
 
 export const CartPage = () => {
-    const { cart, decrementQuantity, incrementQuantity, removeFromCart } = useCart();
+    const {
+        cart,
+        decrementQuantity,
+        getTotalItemsCount,
+        getTotalPrice,
+        incrementQuantity,
+        removeFromCart,
+    } = useCart();
 
     const handleDecrementQuantity = (product: Product) => {
         decrementQuantity({ productId: product.id });
@@ -19,14 +24,8 @@ export const CartPage = () => {
         removeFromCart({ productId: product.id });
     };
 
-    const { totalPrice, totalItems } = useMemo(() => {
-        const total = cart.reduce(
-            (sum, item) => sum + (item.product.price ?? 0) * item.quantity,
-            0
-        );
-        const items = cart.reduce((sum, item) => sum + item.quantity, 0);
-        return { totalPrice: total, totalItems: items };
-    }, [cart]);
+    const totalItems = getTotalItemsCount();
+    const totalPrice = getTotalPrice();
 
     if (!cart || cart.length === 0) {
         return (
@@ -39,23 +38,26 @@ export const CartPage = () => {
     }
 
     return (
-        <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Your Cart</h2>
-            <div className="space-y-4">
-                {cart.map(({ product, quantity }) => (
-                    <CartProductItem
-                        key={product.id}
-                        onDecrementQuantity={() => handleDecrementQuantity(product)}
-                        onIncrementQuantity={() => handleIncrementQuantity(product)}
-                        onRemoveItem={() => handleRemoveItem(product)}
-                        product={product}
-                        quantity={quantity}
-                    />
-                ))}
+        <div className="flex flex-col gap-8 lg:flex-row">
+            <div className="w-full space-y-4 lg:w-fit">
+                <h2 className="text-2xl font-bold">Your Cart</h2>
+                <div className="space-y-4">
+                    {cart.map(({ product, quantity }) => (
+                        <CartProductItem
+                            key={product.id}
+                            onDecrementQuantity={() => handleDecrementQuantity(product)}
+                            onIncrementQuantity={() => handleIncrementQuantity(product)}
+                            onRemoveItem={() => handleRemoveItem(product)}
+                            product={product}
+                            quantity={quantity}
+                        />
+                    ))}
+                </div>
             </div>
-
-            <h2 className="text-2xl font-bold">Order Summary</h2>
-            <CartSummary itemCount={totalItems} totalPrice={totalPrice} />
+            <div className="flex w-full flex-col space-y-4 lg:w-128">
+                <h2 className="text-2xl font-bold">Order Summary</h2>
+                <CartSummary itemCount={totalItems} totalPrice={totalPrice} />
+            </div>
         </div>
     );
 };
