@@ -1,10 +1,13 @@
+import { useContext } from 'react';
+
 import { CART_STORAGE_KEY } from '@/constants';
-import { useLocalStorage } from '@/hooks/use-local-storage';
+import { CartContext } from '@/contexts';
+import { useLocalStorage } from '@/hooks';
 import { CartItem, Product } from '@/types';
 
 import useCartHelpers from './helpers';
 
-export function useCart() {
+export const useCart = () => {
     const [cart, setCart, removeCart] = useLocalStorage<CartItem[]>(CART_STORAGE_KEY, []);
 
     const addToCart = ({ product, quantity = 1 }: { product: Product; quantity?: number }) => {
@@ -50,4 +53,14 @@ export function useCart() {
         removeFromCart,
         updateQuantity,
     };
-}
+};
+
+export const useCartContext = () => {
+    const context = useContext(CartContext);
+
+    if (!context) {
+        throw new Error('useCartContext must be used within a CartProvider');
+    }
+
+    return context;
+};
