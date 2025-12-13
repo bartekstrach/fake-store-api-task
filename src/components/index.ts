@@ -1,4 +1,5 @@
 export * from './button';
+export * from './cart-badge';
 export * from './cart-summary';
 export * from './image';
 export * from './pill';
