@@ -6,6 +6,7 @@ import { render } from '@test/test-utils';
 import { QuantityControl } from '.';
 
 vi.mock('@/constants', () => ({
+    CART_STORAGE_KEY: 'test-key',
     DEFAULT_MIN_QUANTITY: 1,
     DEFAULT_MAX_QUANTITY: 999,
 }));
