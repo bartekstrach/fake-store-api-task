@@ -86,6 +86,9 @@ const getItemQuantity = ({ cart, productId }: { cart: CartItem[]; productId: num
 const getTotalPrice = ({ cart }: { cart: CartItem[] }): number =>
     cart.reduce((total, item) => total + (item.product.price ?? 0) * item.quantity, 0);
 
+const getTotalItemsCount = ({ cart }: { cart: CartItem[] }): number =>
+    cart.reduce((total, item) => total + item.quantity, 0);
+
 // Helpers
 const findIndexByProductId = ({ cart, productId }: { cart: CartItem[]; productId: number }) =>
     cart.findIndex(i => i.product.id === productId);
@@ -107,5 +110,6 @@ export default {
     incrementItemQuantity,
     decrementItemQuantity,
     getItemQuantity,
+    getTotalItemsCount,
     getTotalPrice,
 };

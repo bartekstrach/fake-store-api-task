@@ -34,6 +34,8 @@ export function useCart() {
     const getItemQuantity = ({ productId }: { productId: number }): number =>
         useCartHelpers.getItemQuantity({ cart, productId });
 
+    const getTotalItemsCount = (): number => useCartHelpers.getTotalItemsCount({ cart });
+
     const getTotalPrice = (): number => useCartHelpers.getTotalPrice({ cart });
 
     return {
@@ -42,6 +44,7 @@ export function useCart() {
         clearCart,
         decrementQuantity,
         getItemQuantity,
+        getTotalItemsCount,
         getTotalPrice,
         incrementQuantity,
         removeFromCart,

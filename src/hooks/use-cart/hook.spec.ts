@@ -135,6 +135,19 @@ describe('useCart integration tests', () => {
             result.current.addToCart({ product: product2, quantity: 3 }); // 60
         });
 
-        expect(result.current.getTotalPrice()).toBeCloseTo(80);
+        expect(result.current.getTotalPrice()).toBeCloseTo(80, 2);
+    });
+
+    it('calculates total items count correctly', () => {
+        const { result } = renderHook(() => useCart());
+        const product1 = mockProduct();
+        const product2 = mockProduct();
+
+        act(() => {
+            result.current.addToCart({ product: product1, quantity: 2 });
+            result.current.addToCart({ product: product2, quantity: 3 });
+        });
+
+        expect(result.current.getTotalItemsCount()).toBe(5);
     });
 });

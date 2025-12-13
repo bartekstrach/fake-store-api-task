@@ -170,4 +170,22 @@ describe('useCart helpers', () => {
             expect(useCartHelpers.getTotalPrice({ cart: [] })).toBe(0);
         });
     });
+
+    describe('getTotalItemsCount', () => {
+        it('calculates total items count correctly', () => {
+            const productA = mockProduct();
+            const productB = mockProduct();
+
+            const cart = [
+                mockCartItem({ product: productA, quantity: 3 }),
+                mockCartItem({ product: productB, quantity: 4 }),
+            ];
+
+            expect(useCartHelpers.getTotalItemsCount({ cart })).toBe(7);
+        });
+
+        it('returns 0 for empty cart', () => {
+            expect(useCartHelpers.getTotalItemsCount({ cart: [] })).toBe(0);
+        });
+    });
 });
