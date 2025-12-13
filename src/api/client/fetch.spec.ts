@@ -1,12 +1,12 @@
 import { Product } from '@/types';
-import { normalizePath } from '@/utils/url';
+import { normalizePath } from '@/utils';
 
 import { mockProductList } from '@test/mocks';
 import { mockGet, mockGetEmpty, mockGetError } from '@test/utils';
 
 import { fakeStoreAPIFetch } from './fetch';
 
-vi.mock('@/utils/url');
+vi.mock('@/utils');
 
 describe('fakeStoreAPIFetch', () => {
     it('returns products', async () => {

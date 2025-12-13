@@ -1,4 +1,4 @@
-import { normalizePath } from '@/utils/url';
+import { normalizePath } from '@/utils';
 
 const BASE_URL = import.meta.env.VITE_STORE_API_URL;
 
