@@ -29,12 +29,16 @@ body,
 
 /* Card */
 .card {
-    @apply rounded-md border border-gray-400 p-4 shadow-md hover:border-indigo-400 hover:bg-gray-50;
+    @apply rounded-md border border-gray-400 p-4 shadow-md;
+}
+
+.card-hover {
+    @apply hover:border-indigo-400 hover:bg-gray-50;
 }
 
 /* Button */
 .btn {
-    @apply cursor-pointer rounded-md font-semibold transition-all;
+    @apply cursor-pointer rounded-md font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-50;
 }
 
 /* Icon */
