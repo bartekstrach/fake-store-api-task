@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import { Button, Image, Pill, QuantityControl, Rating } from '@/components';
-import { CURRENCY } from '@/constants';
+import { DEFAULT_CURRENCY } from '@/constants';
 import { Product } from '@/types';
 import { capitalizeWord, formatPrice } from '@/utils';
 
@@ -92,7 +92,9 @@ export const ProductItem = ({ onAddToCart, product }: ProductListItemProps) => {
         <div className="card card-hover flex h-full flex-col sm:flex-row sm:gap-4">
             <ProductDetails product={product}>
                 <div className="mt-auto flex flex-col items-center justify-between gap-2 sm:flex-row">
-                    <div className="text-xl font-bold">{formatPrice(product.price, CURRENCY)}</div>
+                    <div className="text-xl font-bold">
+                        {formatPrice(product.price, DEFAULT_CURRENCY)}
+                    </div>
 
                     <Button
                         aria-label={`Add ${product.title} to cart`}
@@ -125,7 +127,9 @@ export const CartProductItem = ({
         <div className="card card-hover flex h-full flex-col sm:flex-row sm:gap-4">
             <ProductDetails product={product}>
                 <div className="mt-auto flex items-center justify-between gap-2 2xs:flex-row">
-                    <div className="text-xl font-bold">{formatPrice(product.price, CURRENCY)}</div>
+                    <div className="text-xl font-bold">
+                        {formatPrice(product.price, DEFAULT_CURRENCY)}
+                    </div>
 
                     <QuantityControl
                         id={`${product.id}`}

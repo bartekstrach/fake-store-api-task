@@ -1,9 +1,10 @@
 import { act } from '@testing-library/react';
 
+import { CART_STORAGE_KEY } from '@/constants';
+
 import { mockProduct } from '@test/mocks';
 import { renderHook } from '@test/test-utils';
 
-import { CART_STORAGE_KEY } from './constants';
 import { useCart } from './hook';
 
 beforeEach(() => {

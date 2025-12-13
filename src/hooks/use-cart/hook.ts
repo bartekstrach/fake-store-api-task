@@ -1,7 +1,7 @@
+import { CART_STORAGE_KEY } from '@/constants';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { CartItem, Product } from '@/types';
 
-import { CART_STORAGE_KEY } from './constants';
 import useCartHelpers from './helpers';
 
 export function useCart() {

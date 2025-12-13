@@ -1,8 +1,7 @@
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import { Button } from '@/components';
-
-import { DEFAULT_MAX_QUANTITY, DEFAULT_MIN_QUANTITY } from './constants';
+import { DEFAULT_MAX_QUANTITY, DEFAULT_MIN_QUANTITY } from '@/constants';
 
 interface Props {
     disabled?: boolean;

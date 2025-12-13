@@ -5,7 +5,7 @@ import { render } from '@test/test-utils';
 
 import { QuantityControl } from '.';
 
-vi.mock('./constants', () => ({
+vi.mock('@/constants', () => ({
     DEFAULT_MIN_QUANTITY: 1,
     DEFAULT_MAX_QUANTITY: 999,
 }));

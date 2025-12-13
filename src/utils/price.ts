@@ -1,4 +1,9 @@
-export const formatPrice = (price: number | undefined, currency: string = 'PLN'): string => {
+import { DEFAULT_CURRENCY, PRICE_DECIMAL_PLACES } from '@/constants';
+
+export const formatPrice = (
+    price: number | undefined,
+    currency: string = DEFAULT_CURRENCY
+): string => {
     if (price === undefined) {
         return `- ${currency}`;
     }
@@ -7,5 +12,5 @@ export const formatPrice = (price: number | undefined, currency: string = 'PLN')
         return `0.00 ${currency}`;
     }
 
-    return `${price.toFixed(2)} ${currency}`;
+    return `${price.toFixed(PRICE_DECIMAL_PLACES)} ${currency}`;
 };
