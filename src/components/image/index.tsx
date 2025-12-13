@@ -21,7 +21,7 @@ export const Image = ({ alt, src }: Props) => {
             ) : (
                 <img
                     alt={alt}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-scale-down p-2"
                     loading="lazy"
                     onError={handleError}
                     src={src}
