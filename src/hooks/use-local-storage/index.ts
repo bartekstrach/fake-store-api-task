@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 /**
  * A generic hook for syncing state with localStorage
@@ -29,6 +29,21 @@ export function useLocalStorage<T>(
             return initialValue;
         }
     });
+
+    // Cross-tab synchronization
+    // Ref: https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event
+    useEffect(() => {
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === key && e.storageArea === window.localStorage) {
+                const newValue = e.newValue ? JSON.parse(e.newValue) : initialValue;
+                setStoredValue(newValue);
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, [key, initialValue]);
 
     const setValue: Dispatch<SetStateAction<T>> = value => {
         setStoredValue(prev => {
