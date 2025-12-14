@@ -144,8 +144,8 @@ export const CartProductItem = ({
     );
 };
 
-export const ProductItemSkeleton = ({ key }: { key: number }) => (
-    <div key={key} className="card flex h-56 animate-pulse flex-col sm:flex-row sm:gap-4">
+export const ProductItemSkeleton = () => (
+    <div className="card flex h-56 animate-pulse flex-col sm:flex-row sm:gap-4">
         <div className="h-48 w-full bg-gray-200 sm:mb-0 sm:h-full sm:w-48" />
         <div className="flex flex-1 flex-col gap-2">
             <div className="h-6 w-3/5 bg-gray-200" />
