@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 
 import './style.css';
+import { ErrorBoundary } from '@/components';
 import { CartProvider } from '@/contexts';
 
 import AppRoutes from './pages/routes.tsx';
@@ -34,13 +35,15 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <CartProvider>
-                <BrowserRouter>
-                    <AppRoutes />
-                </BrowserRouter>
-                {import.meta.env.DEV && <ReactQueryDevtools />}
-            </CartProvider>
-        </QueryClientProvider>
+        <ErrorBoundary>
+            <QueryClientProvider client={queryClient}>
+                <CartProvider>
+                    <BrowserRouter>
+                        <AppRoutes />
+                    </BrowserRouter>
+                    {import.meta.env.DEV && <ReactQueryDevtools />}
+                </CartProvider>
+            </QueryClientProvider>
+        </ErrorBoundary>
     </StrictMode>
 );

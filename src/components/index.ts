@@ -1,6 +1,7 @@
 export * from './button';
 export * from './cart-badge';
 export * from './cart-summary';
+export * from './error-boundary';
 export * from './image';
 export * from './pill';
 export * from './product-item';
