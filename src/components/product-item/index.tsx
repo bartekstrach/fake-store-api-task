@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { Button, Image, Pill, QuantityControl, Rating } from '@/components';
 import { DEFAULT_CURRENCY } from '@/constants';
@@ -60,7 +60,7 @@ const ProductDetails = ({ priceActionSection, product }: ProductDetailsProps) =>
 type ButtonState = 'idle' | 'loading' | 'added';
 
 const ASYNC_OPERATION_DELAY = 500;
-const BUTTON_STATE_RESET_DELAY = 1500;
+const BUTTON_STATE_RESET_DELAY = 1000;
 
 const BUTTON_CONFIG: Record<ButtonState, { disabled: boolean; text: string }> = {
     added: { disabled: true, text: 'Added!' },
@@ -70,6 +70,15 @@ const BUTTON_CONFIG: Record<ButtonState, { disabled: boolean; text: string }> = 
 
 export const ProductItem = ({ onAddToCart, product }: ProductListItemProps) => {
     const [buttonState, setButtonState] = useState<ButtonState>('idle');
+    const timeoutRef = useRef<number | undefined>(undefined);
+
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
     if (!product) {
         return null;
@@ -77,20 +86,31 @@ export const ProductItem = ({ onAddToCart, product }: ProductListItemProps) => {
 
     const { disabled, text } = BUTTON_CONFIG[buttonState];
 
+    /* Simulating asynchronous operation for "onAddToCart"
+     * as updating local storage is synchronous
+     *
+     * Workflow:
+     *   1. Click on "Add to cart" button
+     *   2. Display "Adding..." label
+     *   3. Add item to local storage
+     *   4. Pause for `ASYNC_OPERATION_DELAY` to simulate real-world delay
+     *   5. Display "Added!" label
+     *   6. Pause for `BUTTON_STATE_RESET_DELAY` to prevent user from multiple clicks
+     *   7. Display "Add to cart" label again and enable button
+     */
     const handleAddToCart = () => {
         if (disabled) return;
 
         setButtonState('loading');
 
-        // simulating async operation
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
             onAddToCart();
             setButtonState('added');
-        }, ASYNC_OPERATION_DELAY);
 
-        setTimeout(() => {
-            setButtonState('idle');
-        }, BUTTON_STATE_RESET_DELAY);
+            timeoutRef.current = setTimeout(() => {
+                setButtonState('idle');
+            }, BUTTON_STATE_RESET_DELAY);
+        }, ASYNC_OPERATION_DELAY);
     };
 
     const priceActionSection = (
