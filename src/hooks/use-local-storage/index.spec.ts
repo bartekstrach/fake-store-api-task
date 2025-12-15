@@ -14,7 +14,7 @@ describe('useLocalStorage', () => {
         localStorage.clear();
     });
 
-    describe('stored value', () => {
+    describe('getting value', () => {
         it('returns initial value when no local storage entry exists', () => {
             const { result } = renderHook(() => useLocalStorage('test-key', 'hello'));
 
@@ -24,7 +24,7 @@ describe('useLocalStorage', () => {
         it('returns value already in local storage', () => {
             localStorage.setItem('test-key', JSON.stringify('stored value'));
 
-            const { result } = renderHook(() => useLocalStorage('test-key', 'new value'));
+            const { result } = renderHook(() => useLocalStorage('test-key', 'new default value'));
 
             expect(result.current[0]).toBe('stored value');
         });
@@ -107,10 +107,10 @@ describe('useLocalStorage', () => {
                 result.current[1]('updated value');
             });
 
-            // React state updates normally
+            // react state updates normally
             expect(result.current[0]).toBe('updated value');
 
-            // Error logged
+            // error logged
             expect(errorSpy).toHaveBeenCalledWith(
                 'Error setting localStorage key "test-key":',
                 expect.any(Error)
@@ -150,7 +150,7 @@ describe('useLocalStorage', () => {
                 result.current[2]();
             });
 
-            // Shouldn't reset because removeItem threw
+            // shouldn't reset because removeItem threw
             expect(result.current[0]).toBe('initial value');
 
             expect(errorSpy).toHaveBeenCalledWith(

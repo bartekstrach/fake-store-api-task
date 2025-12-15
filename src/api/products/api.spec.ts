@@ -13,7 +13,7 @@ describe('getProducts', () => {
         vi.clearAllMocks();
     });
 
-    it('fetches and maps products end-to-end', async () => {
+    it('fetches and maps products', async () => {
         const mockAPIResponse = [
             mockProductAPI({
                 id: 1,

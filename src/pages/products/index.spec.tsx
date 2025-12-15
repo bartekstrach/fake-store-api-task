@@ -42,7 +42,7 @@ const CartComponent = () => {
     );
 };
 
-describe('ProductsPage', () => {
+describe('<ProductsPage>', () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
@@ -68,31 +68,31 @@ describe('ProductsPage', () => {
             </>
         );
 
-        // Products load
+        // on products load
         expect(await screen.findByText('First Item')).toBeInTheDocument();
         expect(screen.getByText('3 products')).toBeInTheDocument();
 
-        // Cart empty
+        // cart is empty
         await expectCartCount(0);
 
-        // Add first product
+        // add first product
         await addProductToCart(user, 0);
 
-        // Cart updated → 1 product : 1 quantity
+        // cart is updated → 1 product : 1 quantity
         await expectCartCount(1);
         await expectCartItems([111]);
 
-        // Add third product
+        // add third product
         await addProductToCart(user, 2);
 
-        // Cart updated → 2 products : 2 quantity
+        // cart is updated → 2 products : 2 quantity
         await expectCartCount(2);
         await expectCartItems([111, 333]);
 
-        // Add third product again
+        // add third product again
         await addProductToCart(user, 2);
 
-        // Cart updated → 2 products : 3 quantity
+        // cart updated → 2 products : 3 quantity
         await expectCartCount(3);
         await expectCartItems([111, 333]);
     });
@@ -124,24 +124,26 @@ describe('ProductsPage', () => {
         ).toBeInTheDocument();
     });
 
-    it('does not have any accessibility violations', async () => {
-        const mockProducts: Product[] = [
-            mockProduct({ id: 111, title: 'First Item' }),
-            mockProduct({ id: 222, title: 'Second Item' }),
-            mockProduct({ id: 333, title: 'Third Item' }),
-        ];
+    describe('accessibility', () => {
+        it('does not have any accessibility violations', async () => {
+            const mockProducts: Product[] = [
+                mockProduct({ id: 111, title: 'First Item' }),
+                mockProduct({ id: 222, title: 'Second Item' }),
+                mockProduct({ id: 333, title: 'Third Item' }),
+            ];
 
-        mockGet({
-            path: '/products',
-            data: mockProducts,
+            mockGet({
+                path: '/products',
+                data: mockProducts,
+            });
+
+            const { container } = render(<ProductsPage />);
+
+            // on products load
+            expect(await screen.findByText('First Item')).toBeInTheDocument();
+            expect(screen.getByText('3 products')).toBeInTheDocument();
+
+            expect(await axe(container)).toHaveNoViolations();
         });
-
-        const { container } = render(<ProductsPage />);
-
-        // Products load
-        expect(await screen.findByText('First Item')).toBeInTheDocument();
-        expect(screen.getByText('3 products')).toBeInTheDocument();
-
-        expect(await axe(container)).toHaveNoViolations();
     });
 });

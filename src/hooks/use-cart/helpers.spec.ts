@@ -42,7 +42,7 @@ describe('useCart helpers', () => {
             expect(newCart.some(i => i.product.id === 10)).toBe(false);
         });
 
-        it('returns the same array if product does not exist', () => {
+        it('returns the same cart if product not found', () => {
             const cart = [mockCartItem({ product: mockProduct({ id: 123 }) })];
 
             const newCart = useCartHelpers.removeItem({ cart, productId: 999999 });
@@ -70,7 +70,7 @@ describe('useCart helpers', () => {
             expect(newCart).toHaveLength(0);
         });
 
-        it('returns same cart if product not found', () => {
+        it('returns the same cart if product not found', () => {
             const cart = [mockCartItem({ product: mockProduct({ id: 123 }) })];
 
             const result = useCartHelpers.updateItemQuantity({
@@ -94,7 +94,7 @@ describe('useCart helpers', () => {
             expect(newCart[0].quantity).toBe(6);
         });
 
-        it('returns same cart when item not found', () => {
+        it('returns the same cart if product not found', () => {
             const cart = [mockCartItem({ product: mockProduct({ id: 123 }) })];
 
             const result = useCartHelpers.incrementItemQuantity({ cart, productId: 999999 });
@@ -122,7 +122,7 @@ describe('useCart helpers', () => {
             expect(newCart).toHaveLength(0);
         });
 
-        it('returns same cart if item does not exist', () => {
+        it('returns the same cart if product not found', () => {
             const cart = [mockCartItem({ product: mockProduct({ id: 123 }) })];
 
             const newCart = useCartHelpers.decrementItemQuantity({ cart, productId: 99999 });

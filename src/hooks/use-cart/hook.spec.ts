@@ -11,7 +11,7 @@ beforeEach(() => {
     localStorage.clear();
 });
 
-describe('useCart integration tests', () => {
+describe('useCart', () => {
     it('starts with empty cart if no local storage data', () => {
         const { result } = renderHook(() => useCart());
 
@@ -39,7 +39,7 @@ describe('useCart integration tests', () => {
         expect(parsed[0].product.id).toBe(product.id);
         expect(parsed[0].quantity).toBe(3);
 
-        // Rerender hook to simulate component remount, cart should persist
+        // rerender hook to simulate component remount, cart should persist
         rerender();
 
         expect(result.current.cart).toHaveLength(1);
@@ -66,7 +66,7 @@ describe('useCart integration tests', () => {
         });
         expect(result.current.getItemQuantity({ productId: product.id })).toBe(1);
 
-        // Decrementing from 1 should remove the item
+        // decrementing from 1 should remove the item
         act(() => {
             result.current.decrementQuantity({ productId: product.id });
         });

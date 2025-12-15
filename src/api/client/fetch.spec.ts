@@ -56,7 +56,7 @@ describe('fakeStoreAPIFetch', () => {
         );
     });
 
-    it('handles error response with a standard status code error message when the custom one is not provided', async () => {
+    it('handles error response with a default error message when the custom one is not provided', async () => {
         const path = '/path/to/products';
         vi.mocked(normalizePath).mockReturnValue(path);
 
