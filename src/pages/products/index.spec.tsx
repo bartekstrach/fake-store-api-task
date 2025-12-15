@@ -8,7 +8,7 @@ import { Product } from '@/types';
 import { addProductToCart } from '@test/helpers';
 import { mockProduct } from '@test/mocks';
 import { render } from '@test/test-utils';
-import { mockGet } from '@test/utils';
+import { mockGet, mockGetEmpty, mockGetError } from '@test/utils';
 
 import { ProductsPage } from '.';
 
@@ -43,6 +43,10 @@ const CartComponent = () => {
 };
 
 describe('ProductsPage', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
     it('completes adding products to cart workflow', async () => {
         const user = userEvent.setup();
 
@@ -91,6 +95,33 @@ describe('ProductsPage', () => {
         // Cart updated → 2 products : 3 quantity
         await expectCartCount(3);
         await expectCartItems([111, 333]);
+    });
+
+    it('displays "No products available!" message when API returns an empty list', async () => {
+        mockGetEmpty({
+            path: '/products',
+        });
+
+        render(<ProductsPage />);
+
+        expect(await screen.findByText('No products available!')).toBeInTheDocument();
+    });
+
+    it('displays "Oops, something went wrong!" message when API returns an error', async () => {
+        mockGetError({
+            message: 'There is something wrong with API...',
+            options: {
+                status: 503,
+            },
+            path: '/products',
+        });
+
+        render(<ProductsPage />);
+
+        expect(await screen.findByText('Oops, something went wrong!')).toBeInTheDocument();
+        expect(
+            screen.getByText('[API Error] 503: There is something wrong with API...')
+        ).toBeInTheDocument();
     });
 
     it('does not have any accessibility violations', async () => {
