@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'vitest-axe';
 
@@ -78,7 +78,7 @@ describe('<ProductItem>', () => {
             const button = screen.getByText('Add to cart');
             await user.click(button);
 
-            await vi.waitFor(() => {
+            await waitFor(() => {
                 expect(mockOnAddToCart).toHaveBeenCalledTimes(1);
             });
         });
