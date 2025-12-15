@@ -1,10 +1,10 @@
 import { capitalizeWord } from './string';
 
-interface TestCase {
+type TestCase = {
     description: string;
     input: string;
     expected: string;
-}
+};
 
 describe('capitalizeWord', () => {
     const testCases: TestCase[] = [
