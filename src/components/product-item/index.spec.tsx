@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'vitest-axe';
 
 import { mockProduct } from '@test/mocks';
 import { render } from '@test/test-utils';
@@ -77,6 +78,14 @@ describe('ProductItem', () => {
         );
 
         expect(container.firstChild).toBeNull();
+    });
+
+    it('does not have any accessibility violations', async () => {
+        const { container } = render(
+            <ProductItem onAddToCart={mockOnAddToCart} product={product} />
+        );
+
+        expect(await axe(container)).toHaveNoViolations();
     });
 });
 
@@ -215,5 +224,19 @@ describe('CartProductItem', () => {
         const decrementButton = screen.getByTitle('Decrease quantity');
         await user.click(decrementButton);
         expect(mockOnDecrementQuantity).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not have any accessibility violations', async () => {
+        const { container } = render(
+            <CartProductItem
+                onDecrementQuantity={mockOnDecrementQuantity}
+                onIncrementQuantity={mockOnIncrementQuantity}
+                onRemoveItem={mockOnRemoveItem}
+                product={product}
+                quantity={2}
+            />
+        );
+
+        expect(await axe(container)).toHaveNoViolations();
     });
 });
