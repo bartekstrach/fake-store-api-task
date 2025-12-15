@@ -51,11 +51,9 @@ export const ProductsPage = () => {
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">Products</h2>
-                {!isFetching && (
-                    <span className="text-sm text-gray-700">
-                        {data.length} {data.length === 1 ? 'product' : 'products'}
-                    </span>
-                )}
+                <span className="text-sm text-gray-700">
+                    {data.length} {data.length === 1 ? 'product' : 'products'}
+                </span>
             </div>
             <div className="space-y-4">
                 {data.map(product => (
