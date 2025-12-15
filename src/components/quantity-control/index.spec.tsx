@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'vitest-axe';
 
 import { render } from '@test/test-utils';
 
@@ -43,6 +44,12 @@ describe('QuantityControl', () => {
 
             rerender(<QuantityControl {...defaultProps} quantity={999} />);
             expect(screen.getByText('999')).toBeInTheDocument();
+        });
+
+        it('does not have any accessibility violations', async () => {
+            const { container } = render(<QuantityControl {...defaultProps} />);
+
+            expect(await axe(container)).toHaveNoViolations();
         });
     });
 

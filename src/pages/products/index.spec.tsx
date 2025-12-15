@@ -1,5 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'vitest-axe';
 
 import { useCartContext } from '@/hooks';
 import { Product } from '@/types';
@@ -90,5 +91,26 @@ describe('ProductsPage', () => {
         // Cart updated → 2 products : 3 quantity
         await expectCartCount(3);
         await expectCartItems([111, 333]);
+    });
+
+    it('does not have any accessibility violations', async () => {
+        const mockProducts: Product[] = [
+            mockProduct({ id: 111, title: 'First Item' }),
+            mockProduct({ id: 222, title: 'Second Item' }),
+            mockProduct({ id: 333, title: 'Third Item' }),
+        ];
+
+        mockGet({
+            path: '/products',
+            data: mockProducts,
+        });
+
+        const { container } = render(<ProductsPage />);
+
+        // Products load
+        expect(await screen.findByText('First Item')).toBeInTheDocument();
+        expect(screen.getByText('3 products')).toBeInTheDocument();
+
+        expect(await axe(container)).toHaveNoViolations();
     });
 });
