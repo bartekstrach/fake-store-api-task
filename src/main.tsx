@@ -10,8 +10,8 @@ import AppRoutes from './pages/routes.tsx';
 
 // Ref: https://vite.dev/guide/env-and-mode#node-env-and-modes
 if (import.meta.env.DEV) {
-    import('react-axe').then(axe => {
-        // react-axe needs the legacy ReactDOM
+    import('@axe-core/react').then(axe => {
+        // @axe-core/react needs the legacy ReactDOM
         import('react-dom').then(ReactDOM => {
             axe.default(React, ReactDOM, 1000);
         });
