@@ -12,7 +12,7 @@ vi.mock('@/constants', () => ({
     DEFAULT_MAX_QUANTITY: 999,
 }));
 
-describe('QuantityControl', () => {
+describe('<QuantityControl>', () => {
     const defaultProps = {
         id: 'test-product',
         onDecrementQuantity: vi.fn(),
@@ -25,7 +25,7 @@ describe('QuantityControl', () => {
         vi.clearAllMocks();
     });
 
-    describe('Rendering', () => {
+    describe('rendering', () => {
         it('renders all control buttons and quantity display', () => {
             render(<QuantityControl {...defaultProps} />);
 
@@ -35,7 +35,7 @@ describe('QuantityControl', () => {
             expect(screen.getByText('5')).toBeInTheDocument();
         });
 
-        it('displays different quantity values correctly', () => {
+        it('renders different quantity values correctly', () => {
             const { rerender } = render(<QuantityControl {...defaultProps} quantity={1} />);
             expect(screen.getByText('1')).toBeInTheDocument();
 
@@ -45,15 +45,9 @@ describe('QuantityControl', () => {
             rerender(<QuantityControl {...defaultProps} quantity={999} />);
             expect(screen.getByText('999')).toBeInTheDocument();
         });
-
-        it('does not have any accessibility violations', async () => {
-            const { container } = render(<QuantityControl {...defaultProps} />);
-
-            expect(await axe(container)).toHaveNoViolations();
-        });
     });
 
-    describe('User Interactions', () => {
+    describe('actions', () => {
         it('calls onIncrementQuantity when plus button is clicked', async () => {
             const user = userEvent.setup();
 
@@ -115,7 +109,7 @@ describe('QuantityControl', () => {
         });
     });
 
-    describe('Minimum Quantity Behavior', () => {
+    describe('minimum quantity behavior', () => {
         it('disables decrement button when quantity is at minimum (default min: 1)', () => {
             render(<QuantityControl {...defaultProps} quantity={1} />);
 
@@ -151,7 +145,7 @@ describe('QuantityControl', () => {
         });
     });
 
-    describe('Maximum Quantity Behavior', () => {
+    describe('maximum quantity behavior', () => {
         it('disables increment button when quantity is at maximum (default max: 999)', () => {
             render(<QuantityControl {...defaultProps} quantity={999} />);
 
@@ -187,7 +181,7 @@ describe('QuantityControl', () => {
         });
     });
 
-    describe('Disabled State', () => {
+    describe('disabled state', () => {
         it('disables all buttons when disabled prop is true', () => {
             render(<QuantityControl {...defaultProps} disabled={true} />);
 
@@ -215,6 +209,14 @@ describe('QuantityControl', () => {
             expect(defaultProps.onRemoveItem).not.toHaveBeenCalled();
             expect(defaultProps.onDecrementQuantity).not.toHaveBeenCalled();
             expect(defaultProps.onIncrementQuantity).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('accessibility', () => {
+        it('does not have any accessibility violations', async () => {
+            const { container } = render(<QuantityControl {...defaultProps} />);
+
+            expect(await axe(container)).toHaveNoViolations();
         });
     });
 });
