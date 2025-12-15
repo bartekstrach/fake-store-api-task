@@ -46,4 +46,5 @@
 - Prettier
 
 ### Accessibility
-- React Axe
+- [@axe-core/react](https://github.com/dequelabs/axe-core-npm/blob/develop/packages/react/README.md) - for development
+- [Vitest Axe](https://github.com/chaance/vitest-axe) - for testing
