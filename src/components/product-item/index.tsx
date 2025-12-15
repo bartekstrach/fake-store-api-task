@@ -20,7 +20,12 @@ interface CartProductItemProps extends BaseProductItemProps {
     onRemoveItem: () => void;
 }
 
-const ProductDetails = ({ children, product }: { children: React.ReactNode; product: Product }) => {
+interface ProductDetailsProps {
+    priceActionSection: React.ReactNode;
+    product: Product;
+}
+
+const ProductDetails = ({ priceActionSection, product }: ProductDetailsProps) => {
     const { category, description, image, rating, title } = product;
 
     const hasRating = useMemo(
@@ -46,7 +51,7 @@ const ProductDetails = ({ children, product }: { children: React.ReactNode; prod
                     {hasRating && rating && <Rating rate={rating.rate} count={rating.count} />}
                 </div>
 
-                {children}
+                {priceActionSection}
             </div>
         </>
     );
@@ -57,6 +62,12 @@ type ButtonState = 'idle' | 'loading' | 'added';
 const ASYNC_OPERATION_DELAY = 500;
 const BUTTON_STATE_RESET_DELAY = 1500;
 
+const BUTTON_CONFIG: Record<ButtonState, { disabled: boolean; text: string }> = {
+    added: { disabled: true, text: 'Added!' },
+    idle: { disabled: false, text: 'Add to cart' },
+    loading: { disabled: true, text: 'Adding...' },
+};
+
 export const ProductItem = ({ onAddToCart, product }: ProductListItemProps) => {
     const [buttonState, setButtonState] = useState<ButtonState>('idle');
 
@@ -64,13 +75,7 @@ export const ProductItem = ({ onAddToCart, product }: ProductListItemProps) => {
         return null;
     }
 
-    const buttonConfig: Record<ButtonState, { disabled: boolean; text: string }> = {
-        added: { disabled: true, text: 'Added!' },
-        idle: { disabled: false, text: 'Add to cart' },
-        loading: { disabled: true, text: 'Adding...' },
-    };
-
-    const { disabled, text } = buttonConfig[buttonState];
+    const { disabled, text } = BUTTON_CONFIG[buttonState];
 
     const handleAddToCart = () => {
         if (disabled) return;
@@ -88,26 +93,26 @@ export const ProductItem = ({ onAddToCart, product }: ProductListItemProps) => {
         }, BUTTON_STATE_RESET_DELAY);
     };
 
+    const priceActionSection = (
+        <div className="mt-auto flex flex-col items-center justify-between gap-2 sm:flex-row">
+            <div className="text-xl font-bold">{formatPrice(product.price, DEFAULT_CURRENCY)}</div>
+
+            <Button
+                aria-label={`Add ${product.title} to cart`}
+                className="w-full min-w-32 sm:w-auto"
+                disabled={disabled}
+                id={`button--add-to-cart--${product.id}`}
+                onClick={handleAddToCart}
+                variant="primary"
+            >
+                {text}
+            </Button>
+        </div>
+    );
+
     return (
         <div className="card card-hover flex h-full flex-col sm:flex-row sm:gap-4">
-            <ProductDetails product={product}>
-                <div className="mt-auto flex flex-col items-center justify-between gap-2 sm:flex-row">
-                    <div className="text-xl font-bold">
-                        {formatPrice(product.price, DEFAULT_CURRENCY)}
-                    </div>
-
-                    <Button
-                        aria-label={`Add ${product.title} to cart`}
-                        className="w-full min-w-32 sm:w-auto"
-                        disabled={disabled}
-                        id={`button--add-to-cart--${product.id}`}
-                        onClick={handleAddToCart}
-                        variant="primary"
-                    >
-                        {text}
-                    </Button>
-                </div>
-            </ProductDetails>
+            <ProductDetails priceActionSection={priceActionSection} product={product} />
         </div>
     );
 };
@@ -123,23 +128,23 @@ export const CartProductItem = ({
         return null;
     }
 
+    const priceActionSection = (
+        <div className="mt-auto flex items-center justify-between gap-2 2xs:flex-row">
+            <div className="text-xl font-bold">{formatPrice(product.price, DEFAULT_CURRENCY)}</div>
+
+            <QuantityControl
+                id={`${product.id}`}
+                onDecrementQuantity={onDecrementQuantity}
+                onIncrementQuantity={onIncrementQuantity}
+                onRemoveItem={onRemoveItem}
+                quantity={quantity}
+            />
+        </div>
+    );
+
     return (
         <div className="card card-hover flex h-full flex-col sm:flex-row sm:gap-4">
-            <ProductDetails product={product}>
-                <div className="mt-auto flex items-center justify-between gap-2 2xs:flex-row">
-                    <div className="text-xl font-bold">
-                        {formatPrice(product.price, DEFAULT_CURRENCY)}
-                    </div>
-
-                    <QuantityControl
-                        id={`${product.id}`}
-                        onDecrementQuantity={onDecrementQuantity}
-                        onIncrementQuantity={onIncrementQuantity}
-                        onRemoveItem={onRemoveItem}
-                        quantity={quantity}
-                    />
-                </div>
-            </ProductDetails>
+            <ProductDetails priceActionSection={priceActionSection} product={product} />
         </div>
     );
 };
