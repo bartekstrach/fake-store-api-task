@@ -94,11 +94,10 @@ describe('useLocalStorage', () => {
         });
 
         it('updates state but logs error when localStorage.setItem throws', () => {
-            vi.stubGlobal('localStorage', {
-                setItem: () => {
-                    throw new Error('Write error');
-                },
+            vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+                throw new Error('Write error');
             });
+
             const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
             const { result } = renderHook(() => useLocalStorage('test-key', 'initial value'));
@@ -117,7 +116,7 @@ describe('useLocalStorage', () => {
             );
 
             errorSpy.mockRestore();
-            vi.unstubAllGlobals();
+            vi.restoreAllMocks();
         });
     });
 
@@ -135,12 +134,11 @@ describe('useLocalStorage', () => {
         });
 
         it('logs error when localStorage.removeItem throws', () => {
-            const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-            vi.stubGlobal('localStorage', {
-                removeItem: () => {
-                    throw new Error('Remove error');
-                },
+            vi.spyOn(Storage.prototype, 'removeItem').mockImplementation(() => {
+                throw new Error('Remove error');
             });
+
+            const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
             const { result } = renderHook(() => useLocalStorage('test-key', 'initial value'));
 
@@ -159,7 +157,7 @@ describe('useLocalStorage', () => {
             );
 
             errorSpy.mockRestore();
-            vi.unstubAllGlobals();
+            vi.restoreAllMocks();
         });
     });
 });
