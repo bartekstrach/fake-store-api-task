@@ -1,1 +1,3 @@
-export const simpleFuncToConfirmVitestConfig = () => true;
+export * from './price';
+export * from './string';
+export * from './url';

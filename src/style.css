@@ -19,3 +19,41 @@ body,
         @apply flex min-h-screen flex-col;
     }
 }
+
+/* Adding breakpoints for small mobile devices */
+/* https://tailwindcss.com/docs/responsive-design#customizing-your-theme */
+@theme {
+    --breakpoint-xs: 30rem;
+    --breakpoint-2xs: 20rem;
+}
+
+/* Card */
+.card {
+    @apply rounded-md border border-gray-400 p-4 shadow-md;
+}
+
+.card-hover {
+    @apply hover:border-indigo-700 hover:bg-gray-50;
+}
+
+/* Button */
+.btn {
+    @apply cursor-pointer rounded-md font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+/* Icon */
+.icon {
+    @apply inline-block text-gray-900;
+}
+
+.icon-sm {
+    @apply size-4;
+}
+
+.icon-md {
+    @apply size-6;
+}
+
+.icon-lg {
+    @apply size-8;
+}

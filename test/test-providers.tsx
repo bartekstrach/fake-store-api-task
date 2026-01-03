@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { CartProvider } from '@/contexts';
+
 interface TestProvidersProps {
     children: ReactNode;
     queryClient?: QueryClient;
@@ -21,5 +23,9 @@ export const TestProviders = ({ children, queryClient }: TestProvidersProps) => 
             },
         });
 
-    return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
+    return (
+        <QueryClientProvider client={client}>
+            <CartProvider>{children}</CartProvider>
+        </QueryClientProvider>
+    );
 };
