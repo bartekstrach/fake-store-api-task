@@ -1,5 +1,9 @@
 # 🛒 Fake Store API task
 
+## :twisted_rightwards_arrows: Branches
+- `main` - app skeleton (setup, configs, basic structure) 
+- `feat/product-cart` - feature implementation, see PR: https://github.com/bartekstrach/fake-store-api-task/pull/1
+
 ## 🚀 How to run it?
 
 1. Install pnpm - https://pnpm.io/installation
