@@ -13,7 +13,7 @@ describe('<ProductItem>', () => {
         title: 'Test Product',
         description: 'This is a test product description',
         price: 99.99,
-        category: 'electronics',
+        category: 'Electronics',
         image: 'https://example.com/image.jpg',
         rating: {
             rate: 4.5,
@@ -101,7 +101,7 @@ describe('<CartProductItem>', () => {
         title: 'Test Product',
         description: 'This is a test product description',
         price: 99.99,
-        category: 'electronics',
+        category: 'Electronics',
         image: 'https://example.com/image.jpg',
         rating: {
             rate: 4.5,

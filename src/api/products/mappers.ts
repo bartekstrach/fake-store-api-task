@@ -1,4 +1,5 @@
 import { Product, ProductAPI } from '@/types';
+import { capitalizeWord } from '@/utils';
 
 import { PRODUCT_DEFAULTS } from './constants';
 
@@ -29,7 +30,7 @@ import { PRODUCT_DEFAULTS } from './constants';
  */
 export const mapProductAPItoProduct = (productAPI: ProductAPI): Product => ({
     id: productAPI.id,
-    category: productAPI.category,
+    category: productAPI.category && capitalizeWord(productAPI.category),
     description: productAPI.description,
     image: productAPI.image,
     price: productAPI.price,

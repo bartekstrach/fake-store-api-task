@@ -119,5 +119,16 @@ describe('mapProductAPItoProduct', () => {
 
             expect(result.rating).toEqual({ count: 0, rate: 0 });
         });
+
+        it('capitalizes first character of category and keeps remaining characters lowercased', () => {
+            const productAPI = mockProductAPI({
+                id: 1,
+                category: 'clothing & ELECTROnics',
+            });
+
+            const result = mapProductAPItoProduct(productAPI);
+
+            expect(result.category).toBe('Clothing & electronics');
+        });
     });
 });

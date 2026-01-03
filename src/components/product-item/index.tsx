@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Image, Pill, QuantityControl, Rating } from '@/components';
 import { DEFAULT_CURRENCY } from '@/constants';
 import { Product } from '@/types';
-import { capitalizeWord, formatPrice } from '@/utils';
+import { formatPrice } from '@/utils';
 
 interface BaseProductItemProps {
     product: Product;
@@ -47,7 +47,7 @@ const ProductDetails = ({ priceActionSection, product }: ProductDetailsProps) =>
                 </p>
 
                 <div className="flex flex-wrap items-center justify-between gap-2 sm:justify-start">
-                    <Pill>{capitalizeWord(category)}</Pill>
+                    <Pill>{category}</Pill>
                     {hasRating && rating && <Rating rate={rating.rate} count={rating.count} />}
                 </div>
 
