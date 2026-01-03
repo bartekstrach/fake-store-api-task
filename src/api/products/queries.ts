@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getProducts } from './api';
-import { PRODUCT_QUERY_KEYS } from './constants';
+import { PRODUCT_QUERY_KEYS } from '../constants';
 
 /**
  * React Query hook for fetching products
