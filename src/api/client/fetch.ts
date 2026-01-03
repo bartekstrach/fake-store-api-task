@@ -23,16 +23,26 @@ const BASE_URL = import.meta.env.VITE_STORE_API_URL;
 export const fakeStoreAPIFetch = async <T>({ path }: { path: string }): Promise<T> => {
     const normalizedPath = normalizePath(path);
 
-    const res = await fetch(`${BASE_URL}${normalizedPath}`);
-
-    if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`[API Error] ${res.status}: ${text || res.statusText}`);
-    }
-
     try {
+        const res = await fetch(`${BASE_URL}${normalizedPath}`);
+
+        if (!res.ok) {
+            const text = await res.text();
+            throw new Error(`[API Error] ${res.status}: ${text || res.statusText}`);
+        }
+
         return await res.json();
     } catch (error) {
-        throw new Error(`Failed to parse JSON response: ${error}`);
+        // TypeError: network error, invalid URL, URL with credentials, invalid RequestInit
+        if (error instanceof TypeError) {
+            throw new Error(`[Fetch] ${error.message}`);
+        }
+
+        // JSON parse error (from res.json())
+        if (error instanceof SyntaxError) {
+            throw new Error(`[Parse] Invalid JSON: ${error.message}`);
+        }
+
+        throw error;
     }
 };

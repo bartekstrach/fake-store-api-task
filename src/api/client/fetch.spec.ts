@@ -9,10 +9,13 @@ import { fakeStoreAPIFetch } from './fetch';
 vi.mock('@/utils');
 
 describe('fakeStoreAPIFetch', () => {
-    it('returns products', async () => {
-        const path = '/path/to/products';
-        vi.mocked(normalizePath).mockReturnValue(path);
+    const path = '/path/to/products';
 
+    beforeEach(() => {
+        vi.mocked(normalizePath).mockImplementation(path => path);
+    });
+
+    it('returns products', async () => {
         const products = mockProductList(3);
         mockGet({ data: products, path });
 
@@ -23,11 +26,8 @@ describe('fakeStoreAPIFetch', () => {
     });
 
     it('handles error response', async () => {
-        const path = '/path/to/products';
-        vi.mocked(normalizePath).mockReturnValue(path);
-
         mockGetError({
-            message: 'Service Unavailable',
+            error: 'Service Unavailable',
             options: {
                 status: 503,
             },
@@ -40,11 +40,8 @@ describe('fakeStoreAPIFetch', () => {
     });
 
     it('handles not found error', async () => {
-        const path = '/path/to/products';
-        vi.mocked(normalizePath).mockReturnValue(path);
-
         mockGetError({
-            message: 'Products Not Found',
+            error: 'Products Not Found',
             options: {
                 status: 404,
             },
@@ -57,11 +54,8 @@ describe('fakeStoreAPIFetch', () => {
     });
 
     it('handles error response with a default error message when the custom one is not provided', async () => {
-        const path = '/path/to/products';
-        vi.mocked(normalizePath).mockReturnValue(path);
-
         mockGetError({
-            message: '',
+            error: '',
             options: {
                 status: 401,
             },
@@ -74,9 +68,6 @@ describe('fakeStoreAPIFetch', () => {
     });
 
     it('handles empty response', async () => {
-        const path = '/path/to/products';
-        vi.mocked(normalizePath).mockReturnValue(path);
-
         mockGetEmpty({ path });
 
         const result = await fakeStoreAPIFetch<Product[]>({ path });
@@ -86,9 +77,6 @@ describe('fakeStoreAPIFetch', () => {
     });
 
     it('handles slow response', async () => {
-        const path = '/path/to/products';
-        vi.mocked(normalizePath).mockReturnValue(path);
-
         const products = mockProductList(3);
         mockGet({
             data: products,
@@ -103,9 +91,6 @@ describe('fakeStoreAPIFetch', () => {
     });
 
     it('handles custom status code', async () => {
-        const path = '/path/to/products';
-        vi.mocked(normalizePath).mockReturnValue(path);
-
         const products = mockProductList(3);
         mockGet({ data: products, options: { status: 201 }, path });
 
@@ -116,17 +101,26 @@ describe('fakeStoreAPIFetch', () => {
     });
 
     it('handles invalid JSON response', async () => {
-        const path = '/path/to/products';
-        vi.mocked(normalizePath).mockReturnValue(path);
-
         mockGetError({
-            message: 'Not a JSON',
+            error: 'Not a JSON',
             options: { status: 200 },
             path,
         });
 
         await expect(fakeStoreAPIFetch<Product>({ path })).rejects.toThrow(
-            'Failed to parse JSON response: SyntaxError: Unexpected token \'N\', "Not a JSON" is not valid JSON'
+            '[Parse] Invalid JSON: Unexpected token \'N\', "Not a JSON" is not valid JSON'
+        );
+    });
+
+    it('handles network errors', async () => {
+        const typeError = new TypeError('Failed to fetch');
+        mockGetError({
+            error: typeError,
+            path,
+        });
+
+        await expect(fakeStoreAPIFetch<Product[]>({ path })).rejects.toThrow(
+            '[Fetch] Failed to fetch'
         );
     });
 });
