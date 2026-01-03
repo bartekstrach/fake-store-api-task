@@ -1,5 +1,3 @@
-import { describe, it, expect } from 'vitest';
-
 import { mockProduct, mockCartItem } from '@test/mocks';
 
 import useCartHelpers from './helpers';
