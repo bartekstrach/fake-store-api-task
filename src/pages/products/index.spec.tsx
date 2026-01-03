@@ -43,10 +43,6 @@ const CartComponent = () => {
 };
 
 describe('<ProductsPage>', () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
     it('completes adding products to cart workflow', async () => {
         const user = userEvent.setup();
 

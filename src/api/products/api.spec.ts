@@ -4,10 +4,6 @@ import { mockGet } from '@test/utils';
 import { getProducts } from './api';
 
 describe('getProducts', () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
     it('fetches and maps products', async () => {
         const mockAPIResponse = [
             mockProductAPI({

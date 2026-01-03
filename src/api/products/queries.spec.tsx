@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 import { Product } from '@/types';
 
@@ -12,10 +12,6 @@ import { useProducts } from './queries';
 vi.mock('./api');
 
 describe('useProducts', () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
     it('successfully fetches and returns products', async () => {
         const mockProducts: Product[] = mockProductList();
         vi.mocked(getProducts).mockResolvedValue(mockProducts);

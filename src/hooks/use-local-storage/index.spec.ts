@@ -7,11 +7,6 @@ import { useLocalStorage } from '.';
 describe('useLocalStorage', () => {
     beforeEach(() => {
         localStorage.clear();
-        vi.clearAllMocks();
-    });
-
-    afterEach(() => {
-        localStorage.clear();
     });
 
     describe('getting value', () => {

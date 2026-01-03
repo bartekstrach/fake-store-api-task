@@ -21,10 +21,6 @@ describe('<QuantityControl>', () => {
         quantity: 5,
     };
 
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
     describe('rendering', () => {
         it('renders all control buttons and quantity display', () => {
             render(<QuantityControl {...defaultProps} />);
