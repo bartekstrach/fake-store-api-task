@@ -44,6 +44,11 @@ describe('normalizePath', () => {
             expected: '/multiple/slashes/and/spaces',
         },
         {
+            description: 'removes multiple slashes inside a path',
+            input: '/multiple//slashes///inside',
+            expected: '/multiple/slashes/inside',
+        },
+        {
             description: 'returns path with no leading slash by adding one',
             input: 'no-leading-slash',
             expected: '/no-leading-slash',
@@ -57,6 +62,11 @@ describe('normalizePath', () => {
             description: 'handles URL with port',
             input: 'http://localhost:3000/path',
             expected: 'http://localhost:3000/path',
+        },
+        {
+            description: 'handles URL with multiple slashes inside',
+            input: 'https://api.com//path',
+            expected: 'https://api.com/path',
         },
         {
             description: 'does not modify path if already normalized',
