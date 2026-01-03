@@ -109,7 +109,7 @@ describe('<ProductsPage>', () => {
 
     it('displays "Oops, something went wrong!" message when API returns an error', async () => {
         mockGetError({
-            message: 'There is something wrong with API...',
+            error: 'There is something wrong with API...',
             options: {
                 status: 503,
             },
