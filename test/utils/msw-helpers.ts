@@ -46,20 +46,20 @@ export const mockApiSuccess = <T extends JsonBodyType>({
 /**
  * Mock a Fake Store API error response
  *
- * @param message - error message
+ * @param error - error to throw (Error or string message for HTTP error)
  * @param method - HTTP method
  * @param options - additional options
  * @param options.delay - delays the response by the given duration in miliseconds, default = 100ms
- * @param options.status - response status code
+ * @param options.status - response status code (only used when error is string)
  * @param path - API path
  */
 export const mockApiError = ({
-    message,
+    error,
     method,
     options = {},
     path,
 }: {
-    message: string;
+    error: string | Error;
     method: HttpMethod;
     options?: MockOptions;
     path: string;
@@ -69,7 +69,14 @@ export const mockApiError = ({
     server.use(
         http[method](`${BASE_URL}${path}`, async () => {
             await delay(delayMs);
-            return HttpResponse.text(message ?? 'Internal Server Error', { status });
+
+            // Return generic network error ("Failed to fetch")
+            if (error instanceof Error) {
+                return HttpResponse.error();
+            }
+
+            // Return HTTP error response
+            return HttpResponse.text(error ?? 'Internal Server Error', { status });
         })
     );
 };
@@ -132,23 +139,23 @@ export const mockGet = <T>({
 /**
  * Mock a GET Fake Store API error response
  *
- * @param message - error message
+ * @param error - error to throw (Error or string message for HTTP error)
  * @param options - additional options
  * @param options.delay - delays the response by the given duration in miliseconds, default = 100ms
- * @param options.status - response status code
+ * @param options.status - response status code (only used when error is string)
  * @param path - API path
  */
 export const mockGetError = ({
-    message,
+    error,
     options,
     path,
 }: {
-    message: string;
+    error: string | Error;
     options?: MockOptions;
     path: string;
 }) =>
     mockApiError({
-        message,
+        error,
         method: 'get',
         options,
         path,
