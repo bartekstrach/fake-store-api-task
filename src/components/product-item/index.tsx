@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Button, Image, Pill, QuantityControl, Rating } from '@/components';
 import { DEFAULT_CURRENCY } from '@/constants';
@@ -28,10 +28,7 @@ interface ProductDetailsProps {
 const ProductDetails = ({ priceActionSection, product }: ProductDetailsProps) => {
     const { category, description, image, rating, title } = product;
 
-    const hasRating = useMemo(
-        () => rating?.count !== undefined && rating?.rate !== undefined,
-        [rating]
-    );
+    const hasRating = rating && rating?.count !== undefined && rating?.rate !== undefined;
 
     return (
         <>
@@ -48,7 +45,7 @@ const ProductDetails = ({ priceActionSection, product }: ProductDetailsProps) =>
 
                 <div className="flex flex-wrap items-center justify-between gap-2 sm:justify-start">
                     <Pill>{category}</Pill>
-                    {hasRating && rating && <Rating rate={rating.rate} count={rating.count} />}
+                    {hasRating && <Rating rate={rating.rate} count={rating.count} />}
                 </div>
 
                 {priceActionSection}
