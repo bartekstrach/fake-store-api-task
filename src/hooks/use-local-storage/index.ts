@@ -1,9 +1,9 @@
 import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 /**
- * A generic hook for syncing state with localStorage
+ * A generic hook for syncing state with local storage
  *
- * @param key - localStorage key
+ * @param key - local storage key
  * @param initialValue - default value if key doesn't exist
  * @returns [storedValue, setValue, removeValue] - enhanced state management
  *
@@ -12,7 +12,7 @@ import { useState, Dispatch, SetStateAction, useEffect } from 'react';
  *  const [
  *      products, // list of records of type Products
  *      setValue, // adds a new item or updates the existing one in the local storage
- *      removeValue // removes that key from the given Storage object if it exists
+ *      removeValue // removes that key from the given storage object if it exists
  *  ] = useLocalStorage<Products>(PRODUCTS_KEY, []);
  * ```
  */
@@ -50,7 +50,7 @@ export function useLocalStorage<T>(
             const newValue = value instanceof Function ? value(prev) : value;
 
             try {
-                localStorage.setItem(key, JSON.stringify(newValue));
+                window.localStorage.setItem(key, JSON.stringify(newValue));
             } catch (error) {
                 console.error(`Error setting localStorage key "${key}":`, error);
             }
