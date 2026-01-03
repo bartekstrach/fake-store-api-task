@@ -1,12 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-
-import { fakeStoreAPIFetch } from '@/api/client/fetch';
-
 import { mockProductAPI } from '@test/mocks';
+import { mockGet } from '@test/utils';
 
 import { getProducts } from './api';
-
-vi.mock('@/api/client/fetch');
 
 describe('getProducts', () => {
     beforeEach(() => {
@@ -35,7 +30,10 @@ describe('getProducts', () => {
             }),
         ];
 
-        vi.mocked(fakeStoreAPIFetch).mockResolvedValue(mockAPIResponse);
+        mockGet({
+            path: '/products',
+            data: mockAPIResponse,
+        });
 
         const result = await getProducts();
 
