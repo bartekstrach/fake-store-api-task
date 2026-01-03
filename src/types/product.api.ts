@@ -8,5 +8,5 @@ export type ProductAPI = {
         count?: number;
         rate?: number;
     };
-    title: string;
+    title?: string;
 };

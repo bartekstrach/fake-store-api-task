@@ -88,8 +88,7 @@ describe('mapProductAPItoProduct', () => {
         it('applies default title when missing', () => {
             const productAPI = mockProductAPI({
                 id: 1,
-                // @ts-expect-error testing a fallback for `title` being not defined
-                title: undefined as string,
+                title: undefined,
             });
 
             const result = mapProductAPItoProduct(productAPI);
